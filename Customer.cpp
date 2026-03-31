@@ -1,17 +1,10 @@
 #include "Customer.h"
 #include <iostream>
 
-Customer::Customer() : Customer("Гість", "Немає номера") {}
+using namespace std;
 
-Customer::Customer(const std::string& n, const std::string& p)
-    : name(n), phone(p) {
-}
+Customer::Customer(string n) : name(n) {}
 
-Customer::~Customer() {
-    std::cout << "[Customer] \"" << name << "\" видалений.\n";
-}
-
-void Customer::showInfo() const {
-    std::cout << "  Клієнт: " << name
-        << " | Телефон: " << phone << "\n";
+void Customer::show() const {
+    cout << "Customer: " << name << "\n";
 }
