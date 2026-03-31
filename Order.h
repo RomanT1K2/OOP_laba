@@ -1,22 +1,15 @@
 #pragma once
-
-#include <vector>
 #include "Dish.h"
 #include "Customer.h"
+#include <vector>
 
 class Order {
 private:
-    int orderID;
+    std::vector<MenuItem*> items;
     Customer customer;
-    std::vector<Dish> dishes;
-    double discount;
 
 public:
-    Order();
-    Order(int id, const Customer& c, double d = 0.0);
-    ~Order();
-
-    void addDish(const Dish& d);
-    double getTotal() const;
+    Order(Customer c);
+    void addItem(MenuItem* item);
     void showOrder() const;
 };
