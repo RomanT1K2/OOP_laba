@@ -1,29 +1,85 @@
 #include "Dish.h"
-#include <iostream>
 #include <iomanip>
 
-// Конструктор за замовчуванням
-Dish::Dish() : Dish("Невідома страва", 0.0, 0) {}
-
-// Основний конструктор
-Dish::Dish(const std::string& n, double p, int c)
+// 🔹 Dish
+Dish::Dish(string n, double p, int c)
     : name(n), price(p), calories(c) {
+    cout << "[Dish constructor]\n";
 }
 
-// Деструктор
+Dish::Dish(const Dish& other)
+    : name(other.name), price(other.price), calories(other.calories) {
+    cout << "[Dish Copy]\n";
+}
+
+Dish::Dish(Dish&& other) noexcept
+    : name(move(other.name)), price(other.price), calories(other.calories) {
+    cout << "[Dish Move]\n";
+}
+
+Dish& Dish::operator=(const Dish& other) {
+    if (this != &other) {
+        name = other.name;
+        price = other.price;
+        calories = other.calories;
+    }
+    cout << "[Dish operator=]\n";
+    return *this;
+}
+
 Dish::~Dish() {
-    std::cout << "[Dish] \"" << name << "\" видалена.\n";
+    cout << "[Dish destructor]\n";
 }
 
-// Отримати ціну
+void Dish::showInfo() const {
+    cout << left << setw(20) << name
+        << "| Price: " << price
+        << "| Calories: " << calories << "\n";
+}
+
 double Dish::getPrice() const {
     return price;
 }
 
-// Вивід інформації
-void Dish::showInfo() const {
-    std::cout << std::fixed << std::setprecision(2)
-        << "  Страва: " << std::left << std::setw(22) << name
-        << "| Ціна: " << std::setw(8) << price
-        << "| Калорії: " << calories << "\n";
+// 🔹 MainCourse
+MainCourse::MainCourse(string n, double p, int c)
+    : Dish(n, p, c) {
+    cout << "[MainCourse constructor]\n";
+}
+
+void MainCourse::showInfo() const {
+    cout << "[Main Course] ";
+    Dish::showInfo();
+}
+
+// 🔹 Salad
+Salad::Salad(string n, double p, int c)
+    : Dish(n, p, c) {
+    cout << "[Salad constructor]\n";
+}
+
+// Copy
+Salad::Salad(const Salad& other)
+    : Dish(other) {
+    cout << "[Salad Copy]\n";
+}
+
+// Move
+Salad::Salad(Salad&& other) noexcept
+    : Dish(move(other)) {
+    cout << "[Salad Move]\n";
+}
+
+// Operator =
+Salad& Salad::operator=(const Salad& other) {
+    if (this != &other) {
+        Dish::operator=(other);
+    }
+    cout << "[Salad operator=]\n";
+    return *this;
+}
+
+void Salad::showInfo() const {
+    cout << "[Salad] ";
+    Dish::showInfo();
 }
