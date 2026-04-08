@@ -9,6 +9,9 @@ int main() {
     Salad caesar("Caesar Salad", 100, 200);
     Salad greek("Greek Salad", 90, 180);
 
+    MenuItem* item = &pizza;
+    item->printType(); // викличе MenuItem (static binding)
+
     Salad copySalad = caesar;
     Salad movedSalad = std::move(greek);
 
