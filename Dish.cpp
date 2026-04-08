@@ -1,7 +1,7 @@
 #include "Dish.h"
 #include <iomanip>
 
-// 🔹 Dish
+
 Dish::Dish(string n, double p, int c)
     : name(n), price(p), calories(c) {
     cout << "[Dish constructor]\n";
@@ -41,7 +41,7 @@ double Dish::getPrice() const {
     return price;
 }
 
-// 🔹 MainCourse
+
 MainCourse::MainCourse(string n, double p, int c)
     : Dish(n, p, c) {
     cout << "[MainCourse constructor]\n";
@@ -52,7 +52,6 @@ void MainCourse::showInfo() const {
     Dish::showInfo();
 }
 
-// 🔹 Salad
 Salad::Salad(string n, double p, int c)
     : Dish(n, p, c) {
     cout << "[Salad constructor]\n";
@@ -70,7 +69,8 @@ Salad::Salad(Salad&& other) noexcept
     cout << "[Salad Move]\n";
 }
 
-// Operator =
+
+
 Salad& Salad::operator=(const Salad& other) {
     if (this != &other) {
         Dish::operator=(other);
