@@ -9,4 +9,8 @@ private:
 public:
     Customer(string n);
     void show() const;
+    //
+    void printType() const {
+        cout << "MenuItem\n";
+    }
 };
