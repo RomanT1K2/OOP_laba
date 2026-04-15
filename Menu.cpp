@@ -1,39 +1,55 @@
-#include <iostream>
 #include "Menu.h"
-#include "Order.h"
-#include "Customer.h"
+#include <iostream>
+#include <fstream>
 
-//
-void printItem(const MenuItem& item) {
-    item.showInfo();
+using namespace std;
+
+// Конструктор
+Menu::Menu() {
+    cout << "Menu constructor called\n";
 }
 
-int main() {
-
-    MainCourse pizza("Margherita Pizza", 150, 800);
-    Salad caesar("Caesar Salad", 100, 200);
-    Salad greek("Greek Salad", 90, 180);
-    //
-    MenuItem* item = &pizza;
-    item->printType(); // викличе MenuItem (static binding)
-    printItem(pizza);
-
-    Salad copySalad = caesar;
-    Salad movedSalad = std::move(greek);
-
-    Menu menu;
-    menu.addDish(pizza);
-    menu.addDish(caesar);
-
-    menu.showMenu();
-
-    Customer c("Roman");
-    Order order(c);
-
-    order.addItem(&pizza);
-    order.addItem(&caesar);
-
-    order.showOrder();
-
-    return 0;
+// Деструктор
+Menu::~Menu() {
+    cout << "Menu destructor called\n";
 }
+
+// Додати страву
+void Menu::addDish(const Dish& d) {
+    dishes.push_back(d);
+    cout << "Dish added\n";
+}
+
+// Показати меню
+void Menu::showMenu() const {
+    if (dishes.empty()) {
+        cout << "Menu is empty.\n";
+        return;
+    }
+
+    cout << "\n=== MENU ===\n";
+    for (size_t i = 0; i < dishes.size(); i++) {
+        cout << i + 1 << ". ";
+        dishes[i].showInfo();
+    }
+}
+
+// Зберегти у файл
+void Menu::saveToFile() const {
+    ofstream out("menu.txt");
+
+    if (!out) {
+        cout << "Error opening file for writing!\n";
+        return;
+    }
+
+    out << dishes.size() << endl;
+
+    for (const auto& d : dishes) {
+        d.saveToFile(out); // ⚠️ має бути в класі Dish
+    }
+
+    out.close();
+    cout << "Menu saved to file.\n";
+}
+
