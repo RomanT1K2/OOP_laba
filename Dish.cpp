@@ -1,20 +1,19 @@
 #include "Dish.h"
 #include <iomanip>
+#include <string>
 
+using namespace std;
 
 Dish::Dish(string n, double p, int c)
     : name(n), price(p), calories(c) {
-    cout << "[Dish constructor]\n";
 }
 
 Dish::Dish(const Dish& other)
     : name(other.name), price(other.price), calories(other.calories) {
-    cout << "[Dish Copy]\n";
 }
 
 Dish::Dish(Dish&& other) noexcept
     : name(move(other.name)), price(other.price), calories(other.calories) {
-    cout << "[Dish Move]\n";
 }
 
 Dish& Dish::operator=(const Dish& other) {
@@ -28,7 +27,6 @@ Dish& Dish::operator=(const Dish& other) {
 }
 
 Dish::~Dish() {
-    cout << "[Dish destructor]\n";
 }
 
 void Dish::showInfo() const {
@@ -40,11 +38,31 @@ void Dish::showInfo() const {
 double Dish::getPrice() const {
     return price;
 }
+int Dish::getCalories() const {
+    return calories;
+}
+string Dish::getName() const {
+    return name;
+}
+
+void Dish::saveToFile(ofstream& out) const
+{
+    // Write name on its own line, then price and calories on their own lines
+    out << name << '\n';
+    out << price << '\n';
+    out << calories << '\n';
+}
+
+void Dish::loadFromFile(ifstream& in)
+{
+    // Read name (consume leading whitespace/newlines), then price and calories
+    std::getline(in >> std::ws, name);
+    in >> price >> calories;
+}
 
 
 MainCourse::MainCourse(string n, double p, int c)
     : Dish(n, p, c) {
-    cout << "[MainCourse constructor]\n";
 }
 
 void MainCourse::showInfo() const {
@@ -54,21 +72,16 @@ void MainCourse::showInfo() const {
 
 Salad::Salad(string n, double p, int c)
     : Dish(n, p, c) {
-    cout << "[Salad constructor]\n";
 }
 
-// Copy
 Salad::Salad(const Salad& other)
     : Dish(other) {
-    cout << "[Salad Copy]\n";
 }
 
-// Move
+
 Salad::Salad(Salad&& other) noexcept
     : Dish(move(other)) {
-    cout << "[Salad Move]\n";
 }
-
 
 
 Salad& Salad::operator=(const Salad& other) {
